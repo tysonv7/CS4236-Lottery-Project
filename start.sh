@@ -9,4 +9,4 @@ geth  --identity "PhuaChuKang" \
       --nodiscover \
       --rpcapi "db,eth,net,web3" \
       --networkid 1999 \
-      $@
+      $@ && rm -rf ~/.ethash

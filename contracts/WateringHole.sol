@@ -6,5 +6,5 @@ contract WateringHole {
     function kill() { if (msg.sender == bartender) selfdestruct(bartender); }
 
     function set(uint n) { numbers[msg.sender] = n; }
-    function get returns (uint) { return numbers[msg.sender]; }
+    function get() constant returns (uint) { return numbers[msg.sender]; }
 }

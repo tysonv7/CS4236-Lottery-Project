@@ -1,2 +1,8 @@
-loadScript('scripts/util.js');
-loadScript('scripts/bind_accounts.js');
+/*
+    Loads all scripts into the Ethereum console.
+ */
+
+loadScript("scripts/accounts.js");
+loadScript("scripts/contract.js");
+loadScript("scripts/ether.js");
+loadScript("scripts/mining.js");
