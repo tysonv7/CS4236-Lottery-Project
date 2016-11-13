@@ -1,5 +1,11 @@
 # A Lottery System in Ethereum
 
+#### Team Members
+* Thenaesh Elango (A0124772E)
+* Khairul Rizqi (A0121284N)
+* Er Xue Hui (A0107345L)
+* Go Hui Shan (A0126000H)
+
 ## Overview
 We present a blockchain smart-contract based lottery system implemented on
 Ethereum. This lottery system enables anyone with an Ethereum account to create
