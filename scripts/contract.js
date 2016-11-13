@@ -12,9 +12,9 @@ function compile(source) {
 // takes in a user who is deploying the contract
 // deploys the contract
 // returns the contract instance
-// NOTE: NO CONTRACT CONSTRUCTOR ARGUMENTS ALLOWED
-function deploy(contract_obj, deploying_user) {
-  return eth.contract(contract_obj.info.abiDefinition).new({from: deploying_user, data: contract_obj.code, gas: 1000000});
+// NOTE: EXACTLY ONE CONTRACT CONSTRUCTOR ARGUMENT ALLOWED
+function deploy(contract_obj, deploying_user, args) {
+  return eth.contract(contract_obj.info.abiDefinition).new(args, {from: deploying_user, data: contract_obj.code, gas: 1000000});
 }
 
 // takes a contract address
