@@ -45,71 +45,6 @@ The lottery contract has a method called `kill()`, which is only executed if
 the caller is the owner. The method destroys the contract using Ethereum's
 `selfdestruct` mechanism and passes the commission to the winner.
 
-The full lottery contract is presented below:
-```
-pragma solidity ^0.4.4;
-
-contract Lottery
-{
-  struct Player {
-    address addr;
-    uint tixnum;
-  }
-
-  address owner;
-  uint pool;
-  uint tixPrice;
-  uint commission;
-
-  Player[] players;
-
-  function Lottery(uint[2] args) {
-    owner       = msg.sender;
-    tixPrice    = args[0];
-    commission  = args[1];
-  }
-
-  function placeBet(uint _tixnum) payable {
-    if (msg.value < tixPrice)
-      msg.sender.send(msg.value);
-    else {
-      players.push(Player(msg.sender, _tixnum));
-      pool += tixPrice;
-      if (msg.value > tixPrice)
-        msg.sender.send(msg.value - tixPrice);
-    }
-  }
-
-  function generateRandomNumber() internal returns (uint) {
-    return 8888;
-  }
-
-  function closeLottery() {
-    if (msg.sender == owner) {
-      uint winningnum = 8888;
-
-      pool = pool * (100 - commission) / 100;
-
-      Player[] winners;
-      for (uint i = 0; i < players.length; i++) {
-        if (players[i].tixnum == winningnum)
-          winners.push(players[i]);
-      }
-
-      uint prize_per_winner = pool / winners.length;
-
-      for (uint j = 0; j < winners.length; j++) {
-        winners[j].addr.send(prize_per_winner);
-      }
-    }
-  }
-
-  function kill() {
-    if (msg.sender == owner) selfdestruct(owner);
-  }
-}
-```
-
 ### Usage
 A script _start.sh_ is provided to enable easy creation of a test blockchain.
 The file _CustomGenesis.json_ contains parameters to be supplied when creating
@@ -138,5 +73,78 @@ A script _prepare_contract.sh_ is provided to help strip newlines from the
 contract to enable insertion into the `compile` function.
 
 ### Benefits of Our Approach
+The blockchain-based approach to lottery systems yields many benefits over
+simply hosting a lottery website and using existing mechanisms to transfer
+money to buy tickets. The benefits may be summed up as follows:
+* Anonymity
+* Reduced Trust Requirement in Lottery Owner
+* Non-Repudiation of Ticket Purchase
+
+We address each of these in turn.
+
+##### Anonymity
+On a traditional client-server-based lottery website, one first needs to
+authenticate oneself in order to purchase a lottery ticket. One then needs to
+pay for the ticket using traditional payment mechanisms like credit cards.
+Upon winning, one certainly needs to authenticate oneself before collecting the
+prize money.
+
+At every stage, there is no expectation of anonymity in a traditional site.
+This may be highly undesirable due to the social stigma associated with
+gambling and the envy of one's peers (with potentially devastating
+consequences).
+
+Using Ethereum, the only requirement to participate in the lottery is an
+Ethereum address. While the potential for deanonymisation remains if the
+Ethereum address is carelessly associated with the user's real identity, it is
+very much possible to maintain anonymity with an Ethereum address. Ethereum
+users can thus anonymously buy tickets, and even anonymously set up lotteries,
+as long as they take care to dissociate their real identities from their
+Ethereum address.
+
+##### Reduced Trust in Lottery Owner
+In a traditional client-server-based lottery website, it may be difficult to
+trust the party maintaining the website. A malicious lottery-site owner has
+many means to cheat the players of their money.
+
+In the most extreme case, after accepting money for purchase of lottery tickets,
+the owner can simply shut down the site and disappear with the money, leaving
+little recourse for the victims especially if they are located in a different
+country.
+
+Alternatively, the owner can select a winning number to give an unfair advantage
+to some player in the lottery.
+
+The problem is that, in the traditional website, the lottery owner has full
+control over any state in the server, and can modify it in any way. This
+requires players to trust that the owner will not undertake any malicious
+activity.
+
+Using Ethereum allows players to do away with trust in the owner, as the
+owner does not have any special privileges once the contract is created. A
+player can check the contract's code to make sure that the owner has not
+inserted any backdoors to enable malicious state changes. The player can then
+be convinced that the contract does exactly what it specifies, and this is
+verified each time a transaction is made and a block is mined.
+
+The entire code
+and specifications of the contract are laid bare on the blockchain for all to
+see, allowing players to confidently purchase tickets without having to
+worry about a fraudulent owner.
+
+##### Non-Repudiation of Ticket Purchase
+On the other hand, a traditional client-server based lottery website enables
+a user to claim he has not purchased a ticket even though he has, or to claim
+that he has purchased a different ticket from what the website has shown. The
+player may claim that the owner of the website has changed his ticket number,
+or defrauded him in some similar manner.
+
+These claims can be made as the state of the lottery system is entirely under
+the owner's control and the owner may plausibly have made the alleged changes.
+
+With Ethereum, a player's ticket purchase is recorded indelibly in the
+blockchain, and the player cannot deny having purchased a particular ticket
+number or claim to have purchased a different ticket number.
+
 
 ### Conclusion
