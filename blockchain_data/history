@@ -1,4 +1,0 @@
-loadScript('init.js')
-for (var i = 0; i < 10; i++) createAccount()
-setEtherBase(eth.accounts[0])
-getAllEtherBalance()
