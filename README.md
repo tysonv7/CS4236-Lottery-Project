@@ -111,6 +111,31 @@ contract Lottery
 ```
 
 ### Usage
+A script _start.sh_ is provided to enable easy creation of a test blockchain.
+The file _CustomGenesis.json_ contains parameters to be supplied when creating
+the blockchain. Adjust the parameters if necessary (especially the block gas
+limit), and then run `./start.sh init CustomGenesis.json` to initialise the
+blockchain.
+
+Ethereum can then be started using `./start.sh console`. If a node is already
+running, it is possible to attach to it using
+`./start.sh attach ipc:blockchain_data/geth.ipc` instead. Typically, one will
+start the console and start the miner in one shell, then attach to that console
+in another shell to interact with it. This reduces the need for repeatedly
+starting and stopping the miner while experimenting with the contract.
+
+Many utility functions are provided in the _script/_ directory, and all can be
+loaded into the Ethereum console with `loadScript('init.js')`.
+
+One may compile the contract with `var contracts = compile("...");` and then
+deploy with `var lottery = deploy(contracts.Lottery, account_to_deploy_from);`.
+Assuming the miner is running, the contract will soon be inserted into the
+blockchain and acquire an address. If the contract is already deployed at a
+known address, it may be retrieved with
+`getContract(contracts.Lottery, known_address_of_contract);`.
+
+A script _prepare_contract.sh_ is provided to help strip newlines from the
+contract to enable insertion into the `compile` function.
 
 ### Benefits of Our Approach
 
