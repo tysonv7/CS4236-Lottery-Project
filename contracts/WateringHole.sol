@@ -2,6 +2,9 @@ contract WateringHole {
     mapping (address => uint) public numbers;
     address bartender;
 
+    uint x;
+    function(){ x = 1; }
+
     function WateringHole() { bartender = msg.sender; }
     function kill() { if (msg.sender == bartender) selfdestruct(bartender); }
 
