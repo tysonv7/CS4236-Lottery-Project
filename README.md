@@ -18,7 +18,34 @@ winnings.
 The owner can then destroy the contract and claim his commission.
 
 ### The Lottery Contract
+The lottery contract's constructor accepts a single argument `uint[2] args`,
+where `uint[0]` is the ticket price and `uint[1]` is the commission of the
+owner (expressed as an integer from `0` to `100` representing how many percent
+commission the owner takes). Upon deploying the contract, these parameters are
+fixed and cannot be changed by anyone, not even the owner.
 
+The lottery contract has a method called `placeBet(uint _tixnum)`. Anyone
+with an Ethereum account wishing to participate in the lottery simply sends
+a transaction from his account to the lottery contract, including in the
+transaction an amount of Ether sufficient to pay the ticket fees. The account
+holder is then registered as a player and any excess Ether sent is refunded.
+If the amount of Ether sent is not sufficient to pay the transaction fees, the
+account holder is not registered in the lottery and all the Ether sent is
+refunded. The Ether sent to the contract is tracked in the `pool` variable.
+
+The lottery contract has a method called `closeLottery()`. This method, which
+is only executed if the caller is the contract owner, picks a winning number.
+The winners are then selected from all the players, by checking who purchased
+a ticket with the winning number (there may be more that one person who
+purchased the ticket with the winning number, and hence more than one winner).
+The prize pool is (after setting aside the commission amount for the owner)
+divided equally and sent to all the winners.
+
+The lottery contract has a method called `kill()`, which is only executed if
+the caller is the owner. The method destroys the contract using Ethereum's
+`selfdestruct` mechanism and passes the commission to the winner.
+
+The full lottery contract is presented below:
 ```
 pragma solidity ^0.4.4;
 
