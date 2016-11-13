@@ -102,7 +102,7 @@ users can thus anonymously buy tickets, and even anonymously set up lotteries,
 as long as they take care to dissociate their real identities from their
 Ethereum address.
 
-### Reduced Trust in Lottery Owner
+### Reduced Trust Requirement in Lottery Owner
 In a traditional client-server-based lottery website, it may be difficult to
 trust the party maintaining the website. A malicious lottery-site owner has
 many means to cheat the players of their money.
