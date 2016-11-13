@@ -152,7 +152,9 @@ We have thus seen how blockchain-based lotteries have several advantages over
 their traditional counterparts. Their decentralised and anonymous nature
 allows them to maintain a permanent, indelible record of all transactions
 (barring an attack on Ethereum itself, such as through a 51% attack), while
-allowing users to keep their identities hidden.
+allowing players to keep their identities hidden. An incorruptible, mechanical
+third party in the form of the contract itself allows players and lottery
+owners to not have to worry about being defrauded.
 
 Smart contracts on Ethereum may indeed herald a new age of privacy, especially
 when government and corporate surveillance of individuals is reaching its peak.
