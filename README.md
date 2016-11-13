@@ -148,3 +148,11 @@ number or claim to have purchased a different ticket number.
 
 
 ## Conclusion
+We have thus seen how blockchain-based lotteries have several advantages over
+their traditional counterparts. Their decentralised and anonymous nature
+allows them to maintain a permanent, indelible record of all transactions
+(barring an attack on Ethereum itself, such as through a 51% attack), while
+allowing users to keep their identities hidden.
+
+Smart contracts on Ethereum may indeed herald a new age of privacy, especially
+when government and corporate surveillance of individuals is reaching its peak.
