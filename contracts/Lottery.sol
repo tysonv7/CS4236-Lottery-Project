@@ -14,6 +14,7 @@ contract Lottery
 
   Player[] players;
 
+
   function Lottery(uint[2] args) {
     owner       = msg.sender;
     tixPrice    = args[0];
@@ -35,24 +36,23 @@ contract Lottery
 
   function closeLottery() {
     if (msg.sender == owner) {
-      uint winningnum = 8888;
-
-      pool = pool * (100 - commission) / 100;
+      uint winningnum = generateRandomNumber();
 
       Player[] winners;
       for (uint i = 0; i < players.length; i++) {
         if (players[i].tixnum == winningnum) winners.push(players[i]);
       }
 
-      uint prize_per_winner = pool / winners.length;
+      if (winners.length > 0) {
+        pool = pool * (100 - commission) / 100;
+        uint prize_per_winner = pool / winners.length;
 
-      for (uint j = 0; j < winners.length; j++) {
-        winners[j].addr.send(prize_per_winner);
+        for (uint j = 0; j < winners.length; j++) {
+          winners[j].addr.send(prize_per_winner);
+        }
+
+        selfdestruct(owner);
       }
     }
-  }
-
-  function kill() {
-    if (msg.sender == owner) selfdestruct(owner);
   }
 }
